@@ -4,6 +4,7 @@ abstract class WeatherState extends Equatable{
   const WeatherState();
 }
 
+
 class WeatherInitial extends WeatherState {
   const WeatherInitial();
 
@@ -11,12 +12,14 @@ class WeatherInitial extends WeatherState {
   List<Object?> get props => throw UnimplementedError();
 }
 
+
 class WeatherLoading extends WeatherState {
   const WeatherLoading();
 
   @override
   List<Object?> get props => throw UnimplementedError();
 }
+
 
 class WeatherLoaded extends WeatherState {
   final Weather weather;
@@ -27,15 +30,14 @@ class WeatherLoaded extends WeatherState {
 
 }
 
+
 class WeatherError extends WeatherState {
 
   final String message;
 
-
   const WeatherError(this.message);
 
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 
 }
