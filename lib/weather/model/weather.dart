@@ -1,26 +1,29 @@
+import 'package:digitalstreich_app/weather/model/weather_daily.dart';
+import 'package:digitalstreich_app/weather/model/weather_forecast.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'weather.g.dart';
+
+@JsonSerializable()
 class Weather extends Equatable{
 
-  final String cityName;
-  final double temperatureCelsius;
+  Weather({required this.weatherDaily, required this.weatherForecast});
 
-  Weather({
-    required this.cityName,
-    required this.temperatureCelsius
-  });
+  factory Weather.fromJson(Map<String, dynamic> json) =>
+      _$WeatherFromJson(json);
 
-  factory Weather.fromJson(Map<String, dynamic> json) {
-    final weatherText = json['Headline']['Text'];
-    print(json['DailyForecasts']['Temperature']['Minimum']['Value']);
-    // weatherValue = (weatherValue-32)*5/9;
-    print(weatherText);
 
-    return Weather(cityName: 'Kassel', temperatureCelsius: 4.0);
-  }
+  WeatherDaily weatherDaily;
+  List<WeatherForecast> weatherForecast;
+
+
+
+  Map<String, dynamic> toJson() => _$WeatherToJson(this);
+
 
   @override
   // TODO: implement props
-  List<Object?> get props => [cityName, temperatureCelsius];
+  List<Object?> get props => [weatherDaily, weatherForecast];
 }

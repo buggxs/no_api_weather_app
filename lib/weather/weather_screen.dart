@@ -28,14 +28,14 @@ class WeatherScreen extends StatelessWidget {
             },
             builder: (context, state) {
               if (state is WeatherInitial) {
-                return buildInitialInput(context);
+                return _buildInitialInputWidget(context);
               } else if (state is WeatherLoading) {
-                return buildLoading(context);
+                return _buildLoadingWidget(context);
               } else if (state is WeatherLoaded) {
                 return buildColumnWithData(context, state);
               } else {
                 // (state is WeatherError)
-                return buildInitialInput(context);
+                return _buildInitialInputWidget(context);
               }
             },
           )
@@ -47,13 +47,13 @@ class WeatherScreen extends StatelessWidget {
   Widget buildColumnWithData(BuildContext context, WeatherLoaded weatherState) {
     return Column(
       children: [
-        Text(weatherState.weather.cityName, style: Theme.of(context).textTheme.headline1,),
-        Text(weatherState.weather.temperatureCelsius.toString()),
+        Text(weatherState.weather.weatherDaily.text),
+        Text(weatherState.weather.weatherForecast[0].weatherForecastTemperature.tempMax.value.toString()),
       ],
     );
   }
 
-  Widget buildLoading(BuildContext context) {
+  Widget _buildLoadingWidget(BuildContext context) {
     return Dialog(
       child: new Row(
       mainAxisSize: MainAxisSize.min,
@@ -65,7 +65,7 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 
-  Widget buildInitialInput(BuildContext context) {
+  Widget _buildInitialInputWidget(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Form(
@@ -74,16 +74,16 @@ class WeatherScreen extends StatelessWidget {
         children: [
           TextFormField(
             decoration: const InputDecoration(
-              hintText: 'Enter your email.'
+              hintText: 'locationKey eingeben'
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter some text.";
+                return "Es muss ein text eingegeben werden.";
               }
               return null;
             },
             onSaved: (String? value) {
-              submitCityName(context, value!);
+              _submitCityName(context, value!);
             },
           ),
           Padding(
@@ -104,7 +104,8 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 
-  void submitCityName(BuildContext context, String cityName) {
+  // 168717
+  void _submitCityName(BuildContext context, String cityName) {
     final weatherCubit = BlocProvider.of<WeatherCubit>(context);
     weatherCubit.getWeather(cityName);
   }

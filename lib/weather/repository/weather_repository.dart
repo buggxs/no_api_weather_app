@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:digitalstreich_app/weather/model/weather.dart';
 import 'package:http/http.dart' as http;
@@ -15,15 +14,9 @@ class FakeWeatherRepository implements WeatherRepository {
     return Future.delayed(
       const Duration(seconds: 1),
         () async {
-          
-          final response = await streamWeather("168717");
+          final response = await streamWeather(cityName);
 
-          Weather.fromJson(jsonDecode(response.body));
-
-          return Weather(
-              cityName: cityName,
-              temperatureCelsius: 20.0
-          );
+          return Weather.fromJson(json.decode(response.body));
         }
     );
   }
