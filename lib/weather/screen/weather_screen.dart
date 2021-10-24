@@ -1,8 +1,8 @@
-import 'package:digitalstreich_app/weather/cubit/weather_cubit.dart';
+import 'package:digitalstreich_app/weather/bloc/weather_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'model/weather.dart';
+import '../model/weather.dart';
 
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class WeatherScreen extends StatelessWidget {
       body: Center(
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 16),
-          child: BlocConsumer<WeatherCubit, WeatherState>(
+          child: BlocConsumer<WeatherBloc, WeatherState>(
             listener: (context, state) {
               if (state is WeatherError) {
                 Scaffold.of(context).showSnackBar(
@@ -83,6 +83,9 @@ class WeatherScreen extends StatelessWidget {
               return null;
             },
             onSaved: (String? value) {
+              Navigator.of(context).pushNamed(
+                '/weather',
+              );
               _submitCityName(context, value!);
             },
           ),
@@ -106,7 +109,7 @@ class WeatherScreen extends StatelessWidget {
 
   // 168717
   void _submitCityName(BuildContext context, String cityName) {
-    final weatherCubit = BlocProvider.of<WeatherCubit>(context);
-    weatherCubit.getWeather(cityName);
+    BlocProvider.of<WeatherBloc>(context)
+    .add(GetWeather(cityName));
   }
 }
