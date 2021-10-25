@@ -8,7 +8,7 @@ import 'package:digitalstreich_app/weather/screen/weather_screen.dart';
 
 class NavigationRouter {
 
-  final WeatherBloc _weatherBloc = WeatherBloc(FakeWeatherRepository());
+  final WeatherBloc _weatherBloc = WeatherBloc();
 
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {

@@ -11,11 +11,11 @@ class WeatherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Digitalstreich App"),
+        title: const Text("Digitalstreich App"),
       ),
       body: Center(
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.all(16.0),
           child: BlocConsumer<WeatherBloc, WeatherState>(
             listener: (context, state) {
               if (state is WeatherError) {
@@ -27,16 +27,7 @@ class WeatherScreen extends StatelessWidget {
               }
             },
             builder: (context, state) {
-              if (state is WeatherInitial) {
-                return _buildInitialInputWidget(context);
-              } else if (state is WeatherLoading) {
-                return _buildLoadingWidget(context);
-              } else if (state is WeatherLoaded) {
-                return buildColumnWithData(context, state);
-              } else {
-                // (state is WeatherError)
-                return _buildInitialInputWidget(context);
-              }
+              return _buildInitialInputWidget(context);
             },
           )
         ),

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => WeatherBloc(FakeWeatherRepository()),
+          create: (context) => WeatherBloc(),
         ),
       ],
       child: MaterialApp(
